@@ -23,6 +23,6 @@ describe "yum::default" do
   include Helpers::YumTest
 
   it "Default recipe does nothing, so default_test does nothing" do
-    skip "Default recipe does nothing so default test does nothing"
+  	pending
   end
 end

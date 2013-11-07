@@ -21,12 +21,18 @@ default['graphite']['carbon']['log_whisper_updates'] = "False"
 default['graphite']['carbon']['whisper_autoflush'] = "False"
 
 default['graphite']['storage_schemas'] = [
-  {
-    'name' => 'catchall', 
-    'pattern' => '^.*', 
-    'retentions' => '60:100800,900:63000'
-  }
+	{
+		'name' => 'stats', 
+		'pattern' => '^stats.*', 
+		'retentions' => '10s:6h,1min:7d,10min:5y'
+	},
+	{
+		'name' => 'catchall', 
+		'pattern' => '^.*', 
+		'retentions' => '60:100800,900:63000'
+	}
 ]
+
 
 case node['platform_family']
 when "debian"

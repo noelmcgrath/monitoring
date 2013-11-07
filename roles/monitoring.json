@@ -6,5 +6,5 @@
   "json_class": "Chef::Role",
   "description": "This is just a test role, no big deal.",
   "chef_type": "role",
-  "run_list": [ "recipe[apt]",  "recipe[statsd]", "recipe[graphite]" ]
+  "run_list": [ "recipe[apt]", "recipe[statsd]",  "recipe[graphite]", "recipe[graphite::carbon_aggregator]" ]
 }

@@ -34,7 +34,6 @@ attribute :includepkgs, :kind_of => String, :default => nil
 attribute :exclude, :kind_of => String, :default => nil
 attribute :priority, :kind_of => [Integer, String], :default => nil
 attribute :metadata_expire, :kind_of => [Integer, String], :default => nil
-attribute :type, :kind_of => String, :default => nil
 
 def initialize(*args)
   super

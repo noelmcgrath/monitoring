@@ -4,7 +4,7 @@
 #
 
 default['graphite']['version'] = "0.9.10"
-default['graphite']['password'] = "pass"
+default['graphite']['password'] = "change_me"
 default['graphite']['url'] = "graphite"
 default['graphite']['url_aliases'] = []
 default['graphite']['listen_port'] = 80

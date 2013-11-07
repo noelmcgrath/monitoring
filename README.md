@@ -4,8 +4,11 @@ Statsd cookbook location on opscode (http://community.opscode.com/cookbooks/stat
 However as the opscode cookbook is behind this, I have got the cookbook directly from here.
 monitoring cookbook needs to be located @ /root/monitoring for chef-solo to run it - see solo.rb file
 
+Graphite coobook location on opscode (http://community.opscode.com/cookbooks/graphite)
+
 Updates to cookbook
 ===================
+Statsd
 
 statsd\attributes\statsd.rb
 	Updates
@@ -28,3 +31,33 @@ files/default/upstart.config
 		exec sudo -u statsd /usr/share/statsd/scripts/start
 	to
 		exec sudo -u statsd /usr/share/statsd/start
+
+
+
+Graphite
+
+attributes / default.rb 
+		default['graphite']['timezone'] = 'America/Los_Angeles'
+	to
+		default['graphite']['timezone'] = 'America/Los_Angeles'
+
+
+
+
+ITS Notes
+=========
+
+Statsd
+	Port 8125
+	nodejs
+
+Graphite
+	Apache, python
+	Web app django
+
+Git
+
+Apt
+
+http required to require source
+

@@ -4,7 +4,7 @@
 #
 
 default['graphite']['version'] = "0.9.10"
-default['graphite']['password'] = "pass"
+default['graphite']['password'] = "change_me"
 default['graphite']['chef_role'] = "graphite"
 default['graphite']['url'] = "graphite"
 default['graphite']['url_aliases'] = []
@@ -38,8 +38,8 @@ default['graphite']['web']['cluster_servers'] = []
 default['graphite']['web']['carbonlink_hosts'] = []
 
 default['graphite']['web_server'] = 'apache'
-default['graphite']['user_account'] = node['apache']['user']
-default['graphite']['group_account'] = node['apache']['group']
+default['graphite']['user_account'] = "www-data"
+default['graphite']['group_account'] = "www-data"
 default['graphite']['create_user'] = false
 
 default['graphite']['ssl']['enabled'] = false
