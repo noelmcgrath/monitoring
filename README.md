@@ -1,6 +1,19 @@
 Overview
 ========
-Statsd cookbook location on opscode (http://community.opscode.com/cookbooks/statsd) is located at https://github.com/jellybob/kitchen/tree/statsd
+Statsd cookbook location on opscode is out of date and does not work
+
+* Exception when installing debian package
+
+- http://community.opscode.com/cookbooks/statsd
+
+We have used a simpler cookbook from here
+
+-https://github.com/josephholsten/statsd-cookbook
+
+However as the opscode cookbook is behind this, I have got the cookbook directly from here.
+monitoring cookbook needs to be located @ /root/monitoring for chef-solo to run it - see solo.rb file
+
+Statsd cookbook location on opscode does not work (http://community.opscode.com/cookbooks/statsd) is located at https://github.com/jellybob/kitchen/tree/statsd
 However as the opscode cookbook is behind this, I have got the cookbook directly from here.
 monitoring cookbook needs to be located @ /root/monitoring for chef-solo to run it - see solo.rb file
 
