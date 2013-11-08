@@ -2,6 +2,9 @@ Overview
 ========
 Monitoring cookbook repository needs to be located @ `/root/monitoring` for chef-solo to run it - see solo.rb file
 
+Have configured based on etsy configuration. This is important  to ensure no lost metrics and retention correctly done
+-https://github.com/etsy/statsd/blob/master/docs/graphite.md
+
 ##Statsd
 Statsd cookbook location on opscode is out of date and does not work
 
@@ -30,61 +33,26 @@ TODO - get specific sha
 
 
 ##Graphite
-Attributes
+###Attributes
 
 default.rb 
-	default['graphite']['timezone'] = 'UTC'
+	default['graphite']['timezone']
 
 graphite.rb 
-	default['graphite']['timezone'] = 'UTC'
+	default['graphite']['timezone']
 
 carbon_aggregator.rb
-	default['graphite']['storage_aggregation'] = [
-		{
-			'name' => 'min', 
-			'pattern' => '\.lower$', 
-			'xFilesFactor' => '0.1', 
-			'aggregationMethod' => 'min'
-		},
-		{
-			'name' => 'max', 
-			'pattern' => '\.upper$', 
-			'xFilesFactor' => '0.1', 
-			'aggregationMethod' => 'max'
-		},
-		{
-			'name' => 'sum', 
-			'pattern' => '\.sum$', 
-			'xFilesFactor' => '0', 
-			'aggregationMethod' => 'sum'
-		},
-		{
-			'name' => 'count', 
-			'pattern' => '^stats_counts.*', 
-			'xFilesFactor' => '0', 
-			'aggregationMethod' => 'sum'
-		},
-		{
-			'name' => 'default_average', 
-			'pattern' => '.*', 
-			'xFilesFactor' => '0.3', 
-			'aggregationMethod' => 'average'
-		}
-	]
+	default['graphite']['storage_aggregation']
 
 carbon_cache.rb
-	default['graphite']['storage_schemas'] = [
-		{
-			'name' => 'stats', 
-			'pattern' => '^stats.*', 
-			'retentions' => '10s:6h,1min:7d,10min:5y'
-		},
-		{
-			'name' => 'catchall', 
-			'pattern' => '^.*', 
-			'retentions' => '60:100800,900:63000'
-		}
-	]
+	default['graphite']['storage_schemas']
+
+
+Requirements
+========
+Need chef client and ruby installed
+* Latest version of chef TODO
+* ruby 1.9.3
 
 
 ITS Notes
