@@ -36,16 +36,16 @@ TODO - get specific sha
 ###Attributes
 
 default.rb 
-	default['graphite']['timezone']
+	*default['graphite']['timezone']
 
 graphite.rb 
-	default['graphite']['timezone']
+	*default['graphite']['timezone']
 
 carbon_aggregator.rb
-	default['graphite']['storage_aggregation']
+	*default['graphite']['storage_aggregation']
 
 carbon_cache.rb
-	default['graphite']['storage_schemas']
+	*default['graphite']['storage_schemas']
 
 
 Requirements
