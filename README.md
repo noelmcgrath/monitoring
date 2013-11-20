@@ -48,17 +48,20 @@ New attributes added
 ##Graphite
 ###Attributes
 
-default.rb 
-	*default['graphite']['timezone']
+* default.rb 
 
-graphite.rb 
-	*default['graphite']['timezone']
+	* default['graphite']['timezone']
 
-carbon_aggregator.rb
-	*default['graphite']['storage_aggregation']
+* graphite.rb 
 
-carbon_cache.rb
-	*default['graphite']['storage_schemas']
+	* default['graphite']['timezone']
+
+* carbon_aggregator.rb
+
+	* default['graphite']['storage_aggregation']
+
+* carbon_cache.rb
+	* default['graphite']['storage_schemas']
 
 
 Requirements
