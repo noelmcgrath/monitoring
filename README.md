@@ -29,7 +29,8 @@ Updates to cookbook
 
 ###Attributes
 
-*statsd.rb 
+* statsd.rb 
+
 New attributes added
 
 	*default[:statsd][:repo] = "https://github.com/etsy/statsd.git"
@@ -39,7 +40,8 @@ New attributes added
 	*default[:statsd][:dir] = "/usr/share/statsd"
 
 ###Recipes
-default.rb
+
+* default.rb
 	* using git resources to clone repository instead of execute resource
 
 
