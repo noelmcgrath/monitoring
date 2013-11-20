@@ -29,9 +29,13 @@ Updates to cookbook
 
 ###Attributes
 
-statsd.rb  - new attributes
+*statsd.rb 
+New attributes added
+
 	*default[:statsd][:repo] = "https://github.com/etsy/statsd.git"
+
 	*default[:statsd][:sha] = "2ccde8266bbe941ac5f79efe39103b99e1196d92"
+
 	*default[:statsd][:dir] = "/usr/share/statsd"
 
 ###Recipes
