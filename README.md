@@ -27,9 +27,16 @@ Updates to cookbook
 ===================
 ##Statsd
 
-TODO - get specific sha
- - change execute to git?/
+###Attributes
 
+statsd.rb  - new attributes
+	*default[:statsd][:repo] = "https://github.com/etsy/statsd.git"
+	*default[:statsd][:sha] = "2ccde8266bbe941ac5f79efe39103b99e1196d92"
+	*default[:statsd][:dir] = "/usr/share/statsd"
+
+###Recipes
+default.rb
+	* using git resources to clone repository instead of execute resource
 
 
 ##Graphite

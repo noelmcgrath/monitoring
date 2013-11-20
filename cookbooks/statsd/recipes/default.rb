@@ -21,10 +21,10 @@ include_recipe "build-essential"
 include_recipe "git"
 include_recipe "nodejs"
 
-execute "checkout statsd" do
-  command "git clone https://github.com/etsy/statsd"
-  creates "/usr/local/statsd"
-  cwd "/usr/local"
+git node[:statsd][:dir] do
+  repository node[:statsd][:repo]
+  reference node[:statsd][:sha]
+  action :sync
 end
 
 directory "/etc/statsd"
