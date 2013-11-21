@@ -66,21 +66,23 @@ New attributes added
 
 Requirements
 ========
-Need chef client and ruby installed
-* Latest version of chef TODO
-* ruby 1.9.3
+Need chef client
+* Latest version of chef can be installed using install-chef.sh file
+* This will install chef via omnibus, which has its own embedded version of Ruby
 
 
 ITS Notes
 =========
+Assumes curl installed - required to install chef client
 
 Statsd
-	Port 8125
+	Port 8125 UDP
+	Port 8126  for monitoring
 	nodejs
 
 Graphite
 	Apache, python
-	Web app django
+	Web app django, sqllite db
 
 Git
 
