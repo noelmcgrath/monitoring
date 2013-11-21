@@ -76,22 +76,17 @@ ITS Notes
 Assumes curl installed - required to install chef client
 
 Statsd
-
-Port 8125 UDP
-
-Port 8126  for monitoring
-
-nodejs
+*Port 8125 UDP
+*Port 8126  for monitoring
+*nodejs
 
 Graphite
+*Apache, python
+*Web app django, sqllite db
 
-Apache, python
 
-Web app django, sqllite db
-
-Git
-
-Apt
-
-http required to require source
+Other
+*Git
+*Apt
+*http required to require source
 
