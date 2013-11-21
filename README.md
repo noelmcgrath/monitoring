@@ -90,3 +90,9 @@ Other
 *Apt
 *http required to require source
 
+Installation
+========
+*Copy repository to machine
+*Run install-chef.sh
+*Run chef-solo -c solo.rb -j web.json
+
