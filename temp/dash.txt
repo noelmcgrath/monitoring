@@ -1,0 +1,8 @@
+https://172.17.0.132/render/?width=1057&height=632&_salt=1366806043.43&from=-4hours&bgcolor=000000&tz=&title=Request%20Counts&target=alias(stats.Dev.PCSGateway.Bill%2C%20%22Bill%22)&
+target=alias(stats.Dev.PCSGateway.Confirm%2C%20%22Confirm%22)&
+target=alias(stats.Dev.PCSGateway.Lookup%2C%20%22Lookup%22)&target=alias(stats.Dev.PCSGateway.Refund%2C%20%22Refund%22)
+
+https://ec2-54-242-83-243.compute-1.amazonaws.com/render/?_salt=
+1366873389.891&
+target=alias(sumSeries(stats.Dev.PCSGateway.Bill.*)%2C%20%22Bill%22)&target=alias(sumSeries(stats.Dev.PCSGateway.Lookup.*)%2C%20%22Lookup%22)&target=alias(sumSeries(stats.Dev.PCSGateway.Confirm.*)%2C%20%22Confirm%22)&width=586&height=308
+

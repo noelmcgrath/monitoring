@@ -1,0 +1,53 @@
+ssh -i C:\Users\nmcgrath\.ssh\nmcg_new_key.pem ubuntu@ec2-23-20-35-115.compute-1.amazonaws.com
+
+Steps
+To root as sudo
+sudo -s
+
+apt-get update
+apt-get dist-upgrade
+
+Install chef solo
+curl -L https://www.opscode.com/chef/install.sh | bash
+** need to install ruby package
+	apt-get install <selected package>
+	
+Install git 
+	apt-get install git-core
+
+Create sample repo
+	wget http://github.com/opscode/chef-repo/tarball/master
+	tar -zxf master
+	mv opscode-chef-repo* chef-repo
+	rm master
+	
+Create git repository
+git init
+	add and commit initial
+
+Set up knife
+	mkdir .chef
+	echo "cookbook_path [ '/root/chef-repo/cookbooks' ]" > .chef/knife.rb
+
+Create cookbook
+	 knife cookbook create phpapp
+
+	 
+	 knife cookbook site download graphite
+	 tar zxf graphite*
+	 rm graphite*.tar.gz
+	 
+	 
+	 depends "graphite"
+	 include_recipe "graphite"
+	 
+	 file_cache_path "/root/chef-solo"
+cookbook_path "/root/chef-repo/cookbooks"
+
+	 knife cookbook site download   python
+	 tar zxf   python*
+	 rm   python*.tar.gz
+	 
+
+	https://ec2-54-224-176-222.compute-1.amazonaws.com
+	

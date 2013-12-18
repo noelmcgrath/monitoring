@@ -1,0 +1,134 @@
+ssh -i C:\Users\nmcgrath\.ssh\nmcg_aws_key.pem ubuntu@ec2-54-242-83-243.compute-1.amazonaws.com
+ssh auser1@172.17.0.132
+
+Start carbon
+	sudo /opt/graphite/bin/carbon-cache.py stop
+    sudo /opt/graphite/bin/carbon-cache.py start
+
+Browse to Graphite web app
+    https://ec2-54-242-83-243.compute-1.amazonaws.com
+    username:demo password pass
+	
+	https://172.17.0.132
+
+Start statsd
+    cd /opt/statsd
+    node stats.js dConfig.js &
+	
+	killall node
+
+Verify up and running
+    Get internal IP address
+    ifconfig
+    10.211.158.240
+    echo "stats" | nc 10.211.158.240 8126 
+    http://blog.johngoulah.com/2012/10/looking-under-the-covers-of-statsd/
+
+	See whats on the wire
+		sudo tcpdump -t -A -s0 dst port 8125 | grep Dev*
+	
+	
+	Web and Render Url
+  http://ec2-54-242-83-243.compute-1.amazonaws.com:2003/render
+  
+  
+===================
+Configuring Graphite for StatsD
+https://github.com/etsy/statsd/blob/master/docs/graphite.md
+  
+conf/storage-schemas.conf:
+	[stats]
+	pattern = ^stats\..*
+	retentions = 10s:6h,1min:7d,10min:5y
+
+	[stats_count]
+	pattern = ^stats_counts\..*
+	retentions = 10s:6h,1min:7d,10min:5y
+
+whisper-info.py /opt/graphite/storage/whisper/stats_counts/Dev/PCSGateway4/ConfirmException/DEV003.wsp
+	 sudo rm /opt/graphite/storage/whisper/stats/Dev/PCSGatewayBusiness -rf
+	  sudo rm /opt/graphite/storage/whisper/stats_counts/Dev/PCSGatewayBusiness -rf
+	 must stop node and carbon as have cache
+	 
+
+
+==================
+DEV PCS Gateway dashboard
+
+RequentCounts
+https://172.17.0.132/render/?&target=alias(stats_counts.Dev.PCSGateway.Lookup.*%2C%20%22Lookup%22)&target=alias(stats_counts.Dev.PCSGateway.Confirm.*%2C%20%22Confirm%22)&target=alias(stats_counts.Dev.PCSGateway.Bill.*%2C%20%22Bill%22)&target=alias(stats_counts.Dev.PCSGateway.Refund.*%2C%20%22Refund%22)&title=RequentCounts
+
+RequestCountsPerSecound
+https://172.17.0.132/render/?&target=alias(stats.Dev.PCSGateway.Lookup.*%2C%20%22Lookup%22)&target=alias(stats.Dev.PCSGateway.Confirm.*%2C%20%22Confirm%22)&target=alias(stats.Dev.PCSGateway.Bill.*%2C%20%22Bill%22)&target=alias(stats.Dev.PCSGateway.Refund.*%2C%20%22Refund%22)&title=RequestCountsPerSecound
+
+ExceptionsCounts
+https://172.17.0.132/render/?&target=alias(stats_counts.Dev.PCSGateway.LookupException.*%2C%20%22Lookup%22)&target=alias(stats_counts.Dev.PCSGateway.ConfirmException.*%2C%20%22Confirm%22)&target=alias(stats_counts.Dev.PCSGateway.BillException.*%2C%20%22Bill%22)&target=alias(stats_counts.Dev.PCSGateway.RefundException.*%2C%20%22Refund%22)&title=ExceptionCounts
+
+AllCallsTimerMean_90
+https://172.17.0.132/render/?&target=alias(stats.timers.Dev.PCSGateway.Lookup.*.mean_90%2C%20%22Lookup%22)&target=alias(stats.timers.Dev.PCSGateway.Confirm.*.mean_90%2C%20%22Confirm%22)&target=alias(stats.timers.Dev.PCSGateway.Bill.*.mean_90%2C%20%22Bill%22)&target=alias(stats.timers.Dev.PCSGateway.Refund.*.mean_90%2C%20%22Refund%22)&title=AllCallsTimerMean_90
+
+LookupTimerMean_90
+https://172.17.0.132/render/?&target=alias(stats.timers.Dev.PCSGateway.Lookup.*.mean_90%2C%20%22Lookup%22)&target=alias(stats.timers.Dev.PCSGateway.BINResolution.*.mean_90%2C%20%22BINs%22)&target=alias(stats.timers.Dev.PCSGateway.RateAcquisition.*.mean_90%2C%20%22Rates%22)&target=alias(stats.timers.Dev.PCSGateway.MerchantResolution.*.mean_90%2C%20%22MerchantResolution%22)&title=LookupTimerMean_90
+
+//time shift
+https://172.17.0.132/render/?target=alias(stats_counts.Dev.PCSGateway.Lookup.DEV003%2C%20%22Lookup%22)&target=alias(timeShift(stats_counts.Dev.PCSGateway.Lookup.DEV003%2C%221d%22)%2C%20%22Lookup%20-1d%22)&target=alias(timeShift(stats_counts.Dev.PCSGateway.Lookup.DEV003%2C%222d%22)%2C%20%22Lookup%20-2d%22)&from=-1days&title=Timeshift
+
+
+==================
+DEV PCS Gateway Business dashboard
+
+OfferCount
+https://172.17.0.132/render/?_salt=1368309934.752&width=586&height=308&target=alias(stats_counts.Dev.PCSGatewayBusiness.Offers.Sample_FXS_Merchant_1%2C%22Sample%20FXS%20Merchant%201%22)%20&target=alias(stats_counts.Dev.PCSGatewayBusiness.Offers.Sample_FXS_Merchant_3%2C%22Sample%20FXS%20Merchant%203%22)&target=alias(stats_counts.Dev.PCSGatewayBusiness.Offers.Sample_FXS_Merchant_4%2C%22Sample%20FXS%20Merchant%204%22)&target=alias(stats_counts.Dev.PCSGatewayBusiness.Offers.Sample_Merchant_1%2C%22Sample%20Merchant%201%22)&target=alias(stats_counts.Dev.PCSGatewayBusiness.Offers.Scoot_PTE_LTD%2C%22Scoot%22)&title=OfferCount
+https://172.17.0.132/render/?_salt=1368310187.426&width=586&height=308&target=alias(stats_counts.Dev.PCSGatewayBusiness.OffersInSaleCurrency.Sample_FXS_Merchant_1.GBP%2C%20%22Sample_FXS_Merchant_1.GBP%22)&target=alias(stats_counts.Dev.PCSGatewayBusiness.OffersInSaleCurrency.Sample_FXS_Merchant_3.USD%2C%20%22Sample_FXS_Merchant_3.USD%22)&target=alias(stats_counts.Dev.PCSGatewayBusiness.OffersInSaleCurrency.Sample_FXS_Merchant_4.EUR%2C%20%22Sample_FXS_Merchant_4.EUR%22)&target=alias(stats_counts.Dev.PCSGatewayBusiness.OffersInSaleCurrency.Sample_Merchant_1.EUR%2C%20%22Sample_FXS_Merchant_1.EUR%22)&target=alias(stats_counts.Dev.PCSGatewayBusiness.OffersInSaleCurrency.Scoot_PTE_LTD.SGD%2C%20%22Scoot.SGD%22)&title=OfferCountInSaleCurrency
+
+NonOfferCount
+https://172.17.0.132/render/?_salt=1368309297.767&target=alias(stats_counts.Dev.PCSGatewayBusiness.NonOffers.Sample_Merchant_1%2C%20%22Sample%20Merchant%201%22)&target=alias(stats_counts.Dev.PCSGatewayBusiness.NonOffers.Scoot_PTE_LTD%2C%20%22Scoot%22)%22&width=586&height=308&title=NonOfferCount
+https://172.17.0.132/render/?_salt=1368309504.706&width=586&height=308&title=NonOfferResultCodeCount&target=alias(sum(stats_counts.Dev.PCSGatewayBusiness.NonOffersResultCodes.*.201)%2C%20%22201%22)&target=alias(sum(stats_counts.Dev.PCSGatewayBusiness.NonOffersResultCodes.*.202)%2C%20%22202%22)&target=alias(sum(stats_counts.Dev.PCSGatewayBusiness.NonOffersResultCodes.*.203)%2C%20%22203%22)&target=alias(sum(stats_counts.Dev.PCSGatewayBusiness.NonOffersResultCodes.*.204)%2C%20%22204%22)&target=alias(sum(stats_counts.Dev.PCSGatewayBusiness.NonOffersResultCodes.*.211)%2C%20%22211%22)&target=alias(sum(stats_counts.Dev.PCSGatewayBusiness.NonOffersResultCodes.*.212)%2C%20%22212%22)&target=alias(sum(stats_counts.Dev.PCSGatewayBusiness.NonOffersResultCodes.*.213)%2C%20%22213%22)https://172.17.0.132/render/?_salt=1368309504.706&width=586&height=308&title=NonOfferResultCodeCount&target=alias(sum(stats_counts.Dev.PCSGatewayBusiness.NonOffersResultCodes.*.201)%2C%20%22201%22)&target=alias(sum(stats_counts.Dev.PCSGatewayBusiness.NonOffersResultCodes.*.202)%2C%20%22202%22)&target=alias(sum(stats_counts.Dev.PCSGatewayBusiness.NonOffersResultCodes.*.203)%2C%20%22203%22)&target=alias(sum(stats_counts.Dev.PCSGatewayBusiness.NonOffersResultCodes.*.204)%2C%20%22204%22)&target=alias(sum(stats_counts.Dev.PCSGatewayBusiness.NonOffersResultCodes.*.211)%2C%20%22211%22)&target=alias(sum(stats_counts.Dev.PCSGatewayBusiness.NonOffersResultCodes.*.212)%2C%20%22212%22)&target=alias(sum(stats_counts.Dev.PCSGatewayBusiness.NonOffersResultCodes.*.213)%2C%20%22213%22)https://172.17.0.132/render/?width=586&height=308&from=-24minutes&title=Non%20Offer%20Result%20Code%20Count&target=sum(stats_counts.Dev.PCSGatewayBusiness.NonOffersResultCodes.*.201)&target=sum(stats_counts.Dev.PCSGatewayBusiness.NonOffersResultCodes.*.202)&target=sum(stats_counts.Dev.PCSGatewayBusiness.NonOffersResultCodes.*.203)&target=sum(stats_counts.Dev.PCSGatewayBusiness.NonOffersResultCodes.*.204)&target=sum(stats_counts.Dev.PCSGatewayBusiness.NonOffersResultCodes.*.211)&target=sum(stats_counts.Dev.PCSGatewayBusiness.NonOffersResultCodes.*.212)&target=sum(stats_counts.Dev.PCSGatewayBusiness.NonOffersResultCodes.*.213)
+
+OfferBilled
+https://172.17.0.132/render/?width=586&height=308&target=stats_counts.Dev.PCSGatewayBusiness.OfferBilled.Sample_FXS_Merchant_1&target=stats_counts.Dev.PCSGatewayBusiness.OfferBilled.Sample_FXS_Merchant_3&target=stats_counts.Dev.PCSGatewayBusiness.OfferBilled.Sample_FXS_Merchant_4&target=stats_counts.Dev.PCSGatewayBusiness.OfferBilled.Sample_Merchant_1&target=stats_counts.Dev.PCSGatewayBusiness.OfferBilled.Scoot_PTE_LTD&from=-24minutes&title=Offer%20Billed%20Count
+https://172.17.0.132/render/?width=1055&height=702&from=-24minutes&target=sum(stats_counts.Dev.PCSGatewayBusiness.OfferBilledInSaleCurrency.*.GBP)&target=sum(stats_counts.Dev.PCSGatewayBusiness.OfferBilledInSaleCurrency.*.USD)&target=sum(stats_counts.Dev.PCSGatewayBusiness.OfferBilledInSaleCurrency.*.EUR)&target=sum(stats_counts.Dev.PCSGatewayBusiness.OfferBilledInSaleCurrency.*.SGD)&title=Offer%20Billed%20Count%20In%20Sale%20Currency
+
+OverallCount
+https://172.17.0.132/render/?_salt=1368310433.681&target=alias(sum(stats_counts.Dev.PCSGatewayBusiness.Offers.*)%2C%20%22Offers%22)&target=alias(sum(stats_counts.Dev.PCSGatewayBusiness.OfferBilled.*)%2C%20%22OfferBilled%22)&target=alias(sum(stats_counts.Dev.PCSGatewayBusiness.OfferConfirmed.*)%2C%20%22OfferConfirmed%22)&target=alias(sum(stats_counts.Dev.PCSGatewayBusiness.NonOffers.*)%2C%20%22NonOffers%22)&width=586&height=308&title=Overall%20Count
+
+
+==================
+
+Graph examples
+HTTP Status  Counter
+https://ec2-54-242-83-243.compute-1.amazonaws.com/render?target=stats_counts.myapp.server1.*&height=800&width=1000&from=-12minutes
+https://ec2-54-242-83-243.compute-1.amazonaws.com/render?target=stats_counts.myapp.server1.*&height=800&width=1000&tz=UTC&title=HTTP Status Counts&colorList=green,yellow,red&from=-12minutes
+
+Pie Graph Type
+https://ec2-54-242-83-243.compute-1.amazonaws.com/render?graphType=pie&target=stats_counts.myapp.server1.200&target=stats_counts.myapp.server1.400&target=stats_counts.myapp.server1.500&height=800&width=1000&tz=UTC&title=HTTP Status Pie Chart&colorList=green,yellow,red&from=-12minutes
+
+Events
+Use drawAsInfinite
+https://ec2-54-242-83-243.compute-1.amazonaws.com/render?target=drawAsInfinite%28stats_counts.events.deploy.myapp%29&target=stats_counts.myapp.server1.*&height=800&width=1000&tz=UTC&title=HTTP Status Counts&colorList=green,yellow,red&from=-12minutes
+
+Timer
+https://ec2-54-242-83-243.compute-1.amazonaws.com/render/?target=stats.timers.noel.timmer2.lower&target=stats.timers.noel.timmer2.upper&target=stats.timers.noel.timmer2.mean&width=586&height=308&tz=UTC&title=Timer 2 Response times&from=-12minutes
+https://ec2-54-242-38-117.compute-1.amazonaws.com/render?target=stats.timers.noel.timmer2.sum&height=800&width=600&from=-12minutes
+
+
+http://ec2-54-242-83-243.compute-1.amazonaws.com:2003/render/?width=586&height=308&from=-2minutes&target=stats.timers.prod2.pcsgateway.bins.execute.timer.dev003.sum
+
+
+https://ec2-54-242-83-243.compute-1.amazonaws.com/render/?width=1613&height=786&from=-24minutes&target=stats_counts.TheApp8.Prod.incrementkey.DEV003&target=stats_counts.TheApp8.Prod.incrementkeyexception.DEV003&target=stats.timers.TheApp8.Prod.timer.DEV003.count&tz=UTC
+
+https://ec2-54-242-83-243.compute-1.amazonaws.com/render/?width=586&height=308&_salt=1365453487.112&from=-5minutes&target=sumseries(stats.TheApp8.Prod.incrementkey.DEV003)&target=stats_counts.TheApp8.Prod.incrementkey.DEV003
+
+=====
+vim
+insert mode i
+quit insert mode ESC button
+http://blog.interlinked.org/tutorials/vim_tutorial.html
+
+node kill
+killall node
+http://stackoverflow.com/questions/10522532/stop-node-js-program-from-command-line
+
+
+===
+name labnm01a and ip address 172.17.0.132
